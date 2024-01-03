@@ -7,17 +7,28 @@
   },
   "configurePresets": [
     {
-      "name": "default",
-      "displayName": "Default Config",
-      "description": "Default build using Ninja generator",
+      "name": "NinjaGenerator",
+      "displayName": "Ninja Generator Config",
+      "description": "Build using Ninja generator",
       "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/default",
+      "hidden": true
+    },
+    {
+      "name": "VisualStudio17_2022Generator",
+      "displayName": "Visual Studio 17 2022 Generator Config",
+      "description": "Build using Visual Studio 17 2022 Generator",
+      "generator": "Visual Studio 17 2022",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
       "binaryDir": "${sourceDir}/build/default",
       "hidden": true
     },
     {
       "name": "DebugTemplate",
       "displayName": "Debug Template",
-      "inherits": "default",
       "description": "CMake Debug Build Type",
       "binaryDir": "${sourceDir}/cmake-build-debug",
       "cacheVariables": {
@@ -28,7 +39,6 @@
     {
       "name": "ReleaseTemplate",
       "displayName": "Release Template",
-      "inherits": "default",
       "description": "CMake Release Build Type",
       "binaryDir": "${sourceDir}/cmake-build-release",
       "cacheVariables": {
@@ -39,7 +49,6 @@
     {
       "name": "RelWithDebInfoTemplate",
       "displayName": "Release With Debug Info Template",
-      "inherits": "default",
       "description": "CMake RelWithDebInfo Build Type",
       "binaryDir": "${sourceDir}/cmake-build-relwithdebinfo",
       "cacheVariables": {
@@ -89,74 +98,74 @@
       "name" : "WindowsDebug",
       "displayName": "Windows Debug Template",
       "description": "Template for Debug Builds on Windows",
-      "inherits": ["DebugTemplate", "Windows"]
+      "inherits": ["DebugTemplate", "Windows", "VisualStudio17_2022Generator"]
     },
     {
       "name" : "WindowsRelease",
       "displayName": "Windows Release Template",
       "description": "Template for Release Builds on Windows",
-      "inherits": ["ReleaseTemplate", "Windows"]
+      "inherits": ["ReleaseTemplate", "Windows", "VisualStudio17_2022Generator"]
     },
     {
       "name" : "WindowsRelWithDebInfo",
       "displayName": "Windows RelWithDebInfo Template",
       "description": "Template for RelWithDebInfo Builds on Windows",
-      "inherits": ["RelWithDebInfoTemplate", "Windows"]
+      "inherits": ["RelWithDebInfoTemplate", "Windows", "VisualStudio17_2022Generator"]
     },
     {
       "name" : "LinuxDebug",
       "displayName": "Windows Debug Template",
       "description": "Template for Debug Builds on Linux",
-      "inherits": ["DebugTemplate", "Linux"]
+      "inherits": ["DebugTemplate", "Linux", "NinjaGenerator"]
     },
     {
       "name" : "LinuxRelease",
       "displayName": "Windows Release Template",
       "description": "Template for Release Builds on Linux",
-      "inherits": ["ReleaseTemplate", "Linux"]
+      "inherits": ["ReleaseTemplate", "Linux", "NinjaGenerator"]
     },
     {
       "name" : "LinuxRelWithDebInfo",
       "displayName": "Windows RelWithDebInfo Template",
       "description": "Template for RelWithDebInfo Builds on Linux",
-      "inherits": ["RelWithDebInfoTemplate", "Linux"]
+      "inherits": ["RelWithDebInfoTemplate", "Linux", "NinjaGenerator"]
     },
 
     {
       "name" : "WindowsDebugVcpkg",
-      "displayName": "Windows Debug Template",
+      "displayName": "Windows Debug Template Vcpkg",
       "description": "Template for Debug Builds on Windows",
-      "inherits": ["DebugTemplate", "Windows", "VCPKG"]
+      "inherits": ["DebugTemplate", "Windows", "VCPKG", "NinjaGenerator"]
     },
     {
       "name" : "WindowsReleaseVcpkg",
-      "displayName": "Windows Release Template",
+      "displayName": "Windows Release Template Vcpkg",
       "description": "Template for Release Builds on Windows",
-      "inherits": ["ReleaseTemplate", "Windows", "VCPKG"]
+      "inherits": ["ReleaseTemplate", "Windows", "VCPKG", "NinjaGenerator"]
     },
     {
       "name" : "WindowsRelWithDebInfoVcpkg",
-      "displayName": "Windows RelWithDebInfo Template",
+      "displayName": "Windows RelWithDebInfo Template Vcpkg",
       "description": "Template for RelWithDebInfo Builds on Windows",
-      "inherits": ["RelWithDebInfoTemplate", "Windows", "VCPKG"]
+      "inherits": ["RelWithDebInfoTemplate", "Windows", "VCPKG", "NinjaGenerator"]
     },
     {
       "name" : "LinuxDebugVcpkg",
-      "displayName": "Windows Debug Template",
+      "displayName": "Windows Debug Template Vcpkg",
       "description": "Template for Debug Builds on Linux",
-      "inherits": ["DebugTemplate", "Linux", "VCPKG"]
+      "inherits": ["DebugTemplate", "Linux", "VCPKG", "NinjaGenerator"]
     },
     {
       "name" : "LinuxReleaseVcpkg",
-      "displayName": "Windows Release Template",
+      "displayName": "Windows Release Template Vcpkg",
       "description": "Template for Release Builds on Linux",
-      "inherits": ["ReleaseTemplate", "Linux", "VCPKG"]
+      "inherits": ["ReleaseTemplate", "Linux", "VCPKG", "NinjaGenerator"]
     },
     {
       "name" : "LinuxRelWithDebInfoVcpkg",
-      "displayName": "Windows RelWithDebInfo Template",
+      "displayName": "Windows RelWithDebInfo Template Vcpkg",
       "description": "Template for RelWithDebInfo Builds on Linux",
-      "inherits": ["RelWithDebInfoTemplate", "Linux", "VCPKG"]
+      "inherits": ["RelWithDebInfoTemplate", "Linux", "VCPKG", "NinjaGenerator"]
     }
   ]
 }
