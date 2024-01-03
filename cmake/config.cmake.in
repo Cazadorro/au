@@ -1,0 +1,7 @@
+@PACKAGE_INIT@
+
+include("${CMAKE_CURRENT_LIST_DIR}/auTargets.cmake")
+
+include(CMakeFindDependencyMacro)
+# if we have dependencies, need to write "find_dependency" here
+check_required_components(au)

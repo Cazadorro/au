@@ -3,7 +3,7 @@ project(au)
 
 
 #TODO some libraries (like "apply_magnitude") are apparently "implementation detail only" libraries, do we hide this from the export set of targets?
-
+cmake_path(GET CMAKE_CURRENT_SOURCE_DIR PARENT_PATH AU_PARENT_DIRECTORY)
 
 # While CMake is capable of globbing, we don't do it. It screws with IDEs ability to find files,
 # and having a library be installable.
@@ -24,9 +24,11 @@ target_sources(stdx
         ${AU_PARENT_DIRECTORY}/au/stdx/utility.hh
 )
 
-cmake_path(GET CMAKE_CURRENT_SOURCE_DIR PARENT_PATH AU_PARENT_DIRECTORY)
-
-target_include_directories(stdx INTERFACE ${AU_PARENT_DIRECTORY})
+target_include_directories(stdx INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
 
 
 add_library(utility INTERFACE)
@@ -43,7 +45,11 @@ target_sources(utility
 )
 
 target_link_libraries(utility INTERFACE stdx)
-
+target_include_directories(utility INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
 
 add_library(packs INTERFACE)
 
@@ -57,6 +63,11 @@ target_sources(packs
 )
 
 target_link_libraries(packs INTERFACE stdx utility)
+target_include_directories(packs INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
 
 
 add_library(zero INTERFACE)
@@ -68,6 +79,11 @@ target_sources(zero
         BASE_DIRS ${AU_PARENT_DIRECTORY}
         FILES
         ${AU_PARENT_DIRECTORY}/au/zero.hh
+)
+target_include_directories(zero INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
 
@@ -81,6 +97,12 @@ target_sources(power_aliases
         FILES
         ${AU_PARENT_DIRECTORY}/au/power_aliases.hh
 )
+target_include_directories(power_aliases INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
+
 
 add_library(magnitude INTERFACE)
 
@@ -95,6 +117,13 @@ target_sources(magnitude
 
 target_link_libraries(magnitude INTERFACE packs power_aliases stdx utility zero)
 
+target_include_directories(magnitude INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
+
+
 add_library(apply_rational_magnitude_to_integral INTERFACE)
 
 target_sources(apply_rational_magnitude_to_integral
@@ -108,7 +137,11 @@ target_sources(apply_rational_magnitude_to_integral
 
 target_link_libraries(apply_rational_magnitude_to_integral INTERFACE magnitude)
 
-
+target_include_directories(apply_rational_magnitude_to_integral INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
 add_library(apply_magnitude INTERFACE)
 
 target_sources(apply_magnitude
@@ -122,6 +155,12 @@ target_sources(apply_magnitude
 
 target_link_libraries(apply_magnitude INTERFACE magnitude apply_rational_magnitude_to_integral)
 
+target_include_directories(apply_magnitude INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
+
 add_library(dimension INTERFACE)
 
 target_sources(dimension
@@ -134,6 +173,12 @@ target_sources(dimension
 )
 
 target_link_libraries(dimension INTERFACE packs power_aliases)
+
+target_include_directories(dimension INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
 
 
 add_library(unit_of_measure INTERFACE)
@@ -149,6 +194,12 @@ target_sources(unit_of_measure
 
 target_link_libraries(unit_of_measure INTERFACE dimension magnitude power_aliases stdx utility zero)
 
+target_include_directories(unit_of_measure INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
+
 add_library(conversion_policy INTERFACE)
 
 target_sources(conversion_policy
@@ -162,6 +213,13 @@ target_sources(conversion_policy
 
 target_link_libraries(conversion_policy INTERFACE magnitude stdx unit_of_measure)
 
+target_include_directories(conversion_policy INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
+
+
 add_library(operators INTERFACE)
 
 target_sources(operators
@@ -173,6 +231,12 @@ target_sources(operators
         ${AU_PARENT_DIRECTORY}/au/operators.hh
 )
 
+
+target_include_directories(operators INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
 
 add_library(quantity INTERFACE)
 
@@ -187,7 +251,11 @@ target_sources(quantity
 
 target_link_libraries(quantity INTERFACE apply_magnitude conversion_policy operators unit_of_measure zero)
 
-
+target_include_directories(quantity INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
 add_library(quantity_point INTERFACE)
 
 target_sources(quantity_point
@@ -201,6 +269,12 @@ target_sources(quantity_point
 
 target_link_libraries(quantity_point INTERFACE quantity stdx utility)
 
+target_include_directories(quantity_point INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
+
 add_library(wrapper_operations INTERFACE)
 
 target_sources(wrapper_operations
@@ -213,7 +287,11 @@ target_sources(wrapper_operations
 )
 
 target_link_libraries(wrapper_operations INTERFACE quantity stdx)
-
+target_include_directories(wrapper_operations INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
 
 add_library(unit_symbol INTERFACE)
 
@@ -228,6 +306,11 @@ target_sources(unit_symbol
 
 target_link_libraries(unit_symbol INTERFACE wrapper_operations)
 
+target_include_directories(unit_symbol INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
 
 add_library(prefix INTERFACE)
 
@@ -241,6 +324,13 @@ target_sources(prefix
 )
 
 target_link_libraries(prefix INTERFACE quantity quantity_point unit_of_measure unit_symbol)
+
+target_include_directories(prefix INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
+
 
 #    TODO fix Units test_cc to include *all units* and also include *all headers* for actual thing!
 add_library(units INTERFACE)
@@ -306,7 +396,11 @@ target_sources(units
 )
 
 target_link_libraries(units INTERFACE prefix quantity quantity_point unit_of_measure unit_symbol)
-
+target_include_directories(units INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
 
 add_library(constant INTERFACE)
 
@@ -321,6 +415,13 @@ target_sources(constant
 
 target_link_libraries(constant INTERFACE quantity unit_of_measure wrapper_operations)
 
+target_include_directories(constant INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
+
+
 add_library(math INTERFACE)
 
 target_sources(math
@@ -333,6 +434,12 @@ target_sources(math
 )
 
 target_link_libraries(math INTERFACE constant quantity quantity_point units)
+
+target_include_directories(math INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
 
 add_library(chrono_interop INTERFACE)
 
@@ -347,6 +454,11 @@ target_sources(chrono_interop
 
 target_link_libraries(chrono_interop INTERFACE units)
 
+target_include_directories(chrono_interop INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
 
 add_library(io INTERFACE)
 
@@ -361,6 +473,12 @@ target_sources(io
 
 target_link_libraries(io INTERFACE quantity quantity_point zero)
 
+target_include_directories(io INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
+
 add_library(testing INTERFACE)
 
 target_sources(testing
@@ -373,6 +491,12 @@ target_sources(testing
 )
 
 target_link_libraries(testing INTERFACE io stdx unit_of_measure)
+
+target_include_directories(testing INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
 
 add_library(au INTERFACE)
 
@@ -387,7 +511,13 @@ target_sources(au
 
 target_link_libraries(au INTERFACE chrono_interop constant math)
 
+target_include_directories(au INTERFACE
+        $<BUILD_INTERFACE:${AU_PARENT_DIRECTORY}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
 
+# Testing targets
 if (${AU_ENABLE_TESTING})
     include(../cmake/AuCompileArgUtils.cmake)
 
@@ -945,3 +1075,7 @@ if (${AU_ENABLE_TESTING})
 
     gtest_discover_tests(au_test)
 endif ()
+
+
+
+
