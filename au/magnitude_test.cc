@@ -12,6 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifdef _MSC_VER
+// see https://stackoverflow.com/questions/6563810/m-pi-works-with-math-h-but-not-with-cmath-in-visual-studio
+// needed to even access M_PI.
+#define _USE_MATH_DEFINES
+#endif
+
 #include "au/magnitude.hh"
 
 #include <cmath>
