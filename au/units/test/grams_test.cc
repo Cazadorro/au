@@ -23,7 +23,7 @@ namespace au {
 TEST(Grams, HasExpectedLabel) { expect_label<Grams>("g"); }
 
 TEST(Grams, HasCorrectRelationshipWithPoundsMass) {
-    EXPECT_EQ(micro(grams)(453'592'370L), pounds_mass(1L));
+    EXPECT_EQ(micro(grams)(453'592'370LL), pounds_mass(1LL));
 }
 
 TEST(Grams, HasExpectedSymbol) {

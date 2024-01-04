@@ -22,7 +22,7 @@ namespace au {
 TEST(PoundsMass, HasExpectedLabel) { expect_label<PoundsMass>("lb"); }
 
 TEST(PoundsMass, EquivalentToAppropriateQuantityOfKilograms) {
-    EXPECT_EQ(pounds_mass(100'000'000L), (kilo(grams)(45'359'237L)));
+    EXPECT_EQ(pounds_mass(100'000'000LL), (kilo(grams)(45'359'237LL)));
 }
 
 TEST(PoundsMass, HasExpectedSymbol) {

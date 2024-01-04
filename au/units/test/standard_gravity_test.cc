@@ -25,7 +25,7 @@ namespace au {
 TEST(StandardGravity, HasExpectedLabel) { expect_label<StandardGravity>("g_0"); }
 
 TEST(StandardGravity, HasExpectedValue) {
-    EXPECT_EQ(standard_gravity(1L), (micro(meters) / squared(second))(9'806'650L));
+    EXPECT_EQ(standard_gravity(1LL), (micro(meters) / squared(second))(9'806'650LL));
 }
 
 TEST(StandardGravity, HasExpectedSymbol) {
