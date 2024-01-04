@@ -34,7 +34,7 @@ endif ()
 option(AU_ENABLE_TESTING "Enables Au Tests" ON)
 if (${AU_ENABLE_TESTING})
     option(AU_FORCE_FETCH_CONTENT_GTEST "Forces Au cmakelists.txt to use fetch content to retrieve gtest" OFF)
-    if (${AU_FORCE_FETCH_CONTENT_GTEST})
+    if (NOT ${AU_FORCE_FETCH_CONTENT_GTEST})
         #If we are using another package manager, or it's already installed, see if we can just find gtest.
         find_package(GTest)
     endif ()

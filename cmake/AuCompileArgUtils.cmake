@@ -23,7 +23,7 @@ set(AU_CMAKE_UTILS_GCC_EXTRA_COMPILE_ARGS
 )
 
 set(AU_CMAKE_UTILS_CLANG_EXTRA_COMPILE_ARGS
-        ${LIBSNDFILE_WRAPPER_GCC_EXTRA_ARGS}
+        ${AU_CMAKE_UTILS_GCC_EXTRA_COMPILE_ARGS}
         -Wlifetime
         -Wimplicit-fallthrough
         # Security
