@@ -259,7 +259,7 @@ TEST(Quantity, HandlesBaseDimensionsWithFractionalExponents) {
     using KiloRootFeet = decltype(root<2>(Mega<Feet>{}));
     constexpr auto x = make_quantity<KiloRootFeet>(5);
     EXPECT_EQ(x.in(root<2>(Feet{})), 5'000);
-    EXPECT_EQ(x * x, mega(feet)(25));
+    EXPECT_TRUE(x * x == mega(feet)(25));
 }
 
 TEST(Quantity, HandlesMagnitudesWithFractionalExponents) {

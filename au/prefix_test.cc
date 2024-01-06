@@ -37,7 +37,7 @@ TEST(PrefixApplier, ConvertsUnitToCorrespondingPrefixedType) {
     ::testing::StaticAssertTypeEq<decltype(make_yotta(bytes)), Yotta<Bytes>>();
 }
 
-TEST(PrefixApplier, ConvertsQuantityMakerToMakerOfCorrespondingPrefixedType) {
+TEST(PrefixApplier1, ConvertsQuantityMakerToMakerOfCorrespondingPrefixedType) {
     // Give it a different name to avoid any question of shadowing the globally defined `milli`.
     constexpr auto make_milli = PrefixApplier<Milli>{};
 
@@ -89,35 +89,35 @@ TEST(SiPrefixes, HaveCorrectAbsoluteValues) {
 }
 
 TEST(SiPrefixes, PrefixAppliersPredefined) {
-    constexpr QuantityMaker<Inches> inches{};
+    constexpr auto inches = QuantityMaker<Inches>{};
+    EXPECT_TRUE(quetta(inches)(1) == ronna(inches)(1000));
+    EXPECT_TRUE(ronna(inches)(1) == yotta(inches)(1000));
+    EXPECT_TRUE(yotta(inches)(1) == zetta(inches)(1000));
+    EXPECT_TRUE(zetta(inches)(1) == exa(inches)(1000));
+    EXPECT_TRUE(exa(inches)(1) == peta(inches)(1000));
 
-    EXPECT_EQ(quetta(inches)(1), ronna(inches)(1000));
-    EXPECT_EQ(ronna(inches)(1), yotta(inches)(1000));
-    EXPECT_EQ(yotta(inches)(1), zetta(inches)(1000));
-    EXPECT_EQ(zetta(inches)(1), exa(inches)(1000));
-    EXPECT_EQ(exa(inches)(1), peta(inches)(1000));
-    EXPECT_EQ(peta(inches)(1), tera(inches)(1000));
-    EXPECT_EQ(tera(inches)(1), giga(inches)(1000));
-    EXPECT_EQ(giga(inches)(1), mega(inches)(1000));
-    EXPECT_EQ(mega(inches)(1), kilo(inches)(1000));
+   EXPECT_TRUE(peta(inches)(1) ==  tera(inches)(1000));
+   EXPECT_TRUE(tera(inches)(1) ==  giga(inches)(1000));
+   EXPECT_TRUE(giga(inches)(1) ==  mega(inches)(1000));
+   EXPECT_TRUE(mega(inches)(1) ==  kilo(inches)(1000));
 
-    EXPECT_EQ(kilo(inches)(1), hecto(inches)(10));
-    EXPECT_EQ(hecto(inches)(1), deka(inches)(10));
-    EXPECT_EQ(deka(inches)(1), inches(10));
+    EXPECT_TRUE(kilo(inches)(1) ==  hecto(inches)(10));
+    EXPECT_TRUE(hecto(inches)(1) ==  deka(inches)(10));
+    EXPECT_TRUE(deka(inches)(1) ==  inches(10));
 
-    EXPECT_EQ(inches(1), deci(inches)(10));
-    EXPECT_EQ(deci(inches)(1), centi(inches)(10));
-    EXPECT_EQ(centi(inches)(1), milli(inches)(10));
+    EXPECT_TRUE(inches(1) ==  deci(inches)(10));
+    EXPECT_TRUE(deci(inches)(1) ==  centi(inches)(10));
+    EXPECT_TRUE(centi(inches)(1) ==  milli(inches)(10));
 
-    EXPECT_EQ(milli(inches)(1), micro(inches)(1000));
-    EXPECT_EQ(micro(inches)(1), nano(inches)(1000));
-    EXPECT_EQ(nano(inches)(1), pico(inches)(1000));
-    EXPECT_EQ(pico(inches)(1), femto(inches)(1000));
-    EXPECT_EQ(femto(inches)(1), atto(inches)(1000));
-    EXPECT_EQ(atto(inches)(1), zepto(inches)(1000));
-    EXPECT_EQ(zepto(inches)(1), yocto(inches)(1000));
-    EXPECT_EQ(yocto(inches)(1), ronto(inches)(1000));
-    EXPECT_EQ(ronto(inches)(1), quecto(inches)(1000));
+    EXPECT_TRUE(milli(inches)(1) ==  micro(inches)(1000));
+    EXPECT_TRUE(micro(inches)(1) ==  nano(inches)(1000));
+    EXPECT_TRUE(nano(inches)(1) ==  pico(inches)(1000));
+    EXPECT_TRUE(pico(inches)(1) ==  femto(inches)(1000));
+    EXPECT_TRUE(femto(inches)(1) ==  atto(inches)(1000));
+    EXPECT_TRUE(atto(inches)(1) ==  zepto(inches)(1000));
+    EXPECT_TRUE(zepto(inches)(1) ==  yocto(inches)(1000));
+    EXPECT_TRUE(yocto(inches)(1) ==  ronto(inches)(1000));
+    EXPECT_TRUE(ronto(inches)(1) ==  quecto(inches)(1000));
 }
 
 TEST(SiPrefixes, CorrectlyLabelUnits) {
@@ -162,13 +162,13 @@ TEST(BinaryPrefixes, HaveCorrectAbsoluteValues) {
 TEST(BinaryPrefixes, PrefixAppliersPredefined) {
     constexpr QuantityMaker<Bytes> bytes{};
 
-    EXPECT_EQ(yobi(bytes)(1), zebi(bytes)(1024));
-    EXPECT_EQ(zebi(bytes)(1), exbi(bytes)(1024));
-    EXPECT_EQ(exbi(bytes)(1), pebi(bytes)(1024));
-    EXPECT_EQ(pebi(bytes)(1), tebi(bytes)(1024));
-    EXPECT_EQ(tebi(bytes)(1), gibi(bytes)(1024));
-    EXPECT_EQ(gibi(bytes)(1), mebi(bytes)(1024));
-    EXPECT_EQ(mebi(bytes)(1), kibi(bytes)(1024));
+    EXPECT_TRUE(yobi(bytes)(1) == zebi(bytes)(1024));
+    EXPECT_TRUE(zebi(bytes)(1) == exbi(bytes)(1024));
+    EXPECT_TRUE(exbi(bytes)(1) == pebi(bytes)(1024));
+    EXPECT_TRUE(pebi(bytes)(1) == tebi(bytes)(1024));
+    EXPECT_TRUE(tebi(bytes)(1) == gibi(bytes)(1024));
+    EXPECT_TRUE(gibi(bytes)(1) == mebi(bytes)(1024));
+    EXPECT_TRUE(mebi(bytes)(1) == kibi(bytes)(1024));
 }
 
 TEST(BinaryPrefixes, CorrectlyLabelUnits) {
