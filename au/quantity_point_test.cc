@@ -69,7 +69,7 @@ constexpr QuantityPointMaker<Celsius> celsius_pt{};
 //    EXPECT_FALSE((std::is_convertible<QuantityPointD<Celsius>, QuantityPointI32<Celsius>>::value));
 //}
 
-
+#define MSVC_BUG_TEST_ENABLE_FAILURE_CASE
 TEST(QuantityPoint, CanImplicitlyConstructWithNonintegerOffsetIffDestinationIsFloatingPoint) {
     {
         using T1 = QuantityPoint<Celsius, int32_t>;
